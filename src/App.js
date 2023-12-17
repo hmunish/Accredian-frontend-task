@@ -30,7 +30,7 @@ function App() {
   return (
     <React.Fragment>
       <AppBar position="relative">
-        <Toolbar>MUI Form</Toolbar>
+        <Toolbar>Accredian Form</Toolbar>
       </AppBar>
       <Container>
         <Routes>
