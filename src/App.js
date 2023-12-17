@@ -1,24 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import { AppBar, Button, Toolbar } from "@mui/material";
+import { Container } from "@mui/system";
+import React, { useEffect, useState } from "react";
+
+import { Route, Routes } from "react-router-dom";
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
+import { useDispatch, useSelector } from "react-redux";
+import { authorizeUser, removeAuthorization } from "./redux/user/userSlice";
 
 function App() {
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(authorizeUser());
+  }, []);
+
+  if (user.isAuthorized)
+    return (
+      <Button
+        variant="outlined"
+        color="secondary"
+        onClick={() => dispatch(removeAuthorization())}
+      >
+        Log out
+      </Button>
+    );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <AppBar position="relative">
+        <Toolbar>MUI Form</Toolbar>
+      </AppBar>
+      <Container>
+        <Routes>
+          <Route path="/" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </Container>
+    </React.Fragment>
   );
 }
 
